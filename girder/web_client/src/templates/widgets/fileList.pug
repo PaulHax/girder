@@ -20,10 +20,12 @@ ul.g-file-list
         .g-file-detail
           i.icon-hdd
           | #{formatSize(file.get('size'))}
-      if file.has('created')
-        .g-file-detail
-          i.icon-clock
-          | #{formatDate(file.get('created'), DATE_SECOND)}
+      .g-file-detail
+        i.icon-clock
+          if file.has('updated')
+            | #{formatDate(file.get('updated'), DATE_SECOND)}
+          else 
+            | #{file.get('created') ? formatDate(file.get('created'), DATE_SECOND) : 'unknown'}
       .g-file-actions-container(file-cid=file.cid)
         if parentItem && parentItem.get('_accessLevel') >= AccessType.WRITE
           a.g-update-info(title="Edit file info")
